@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\TaskController;
@@ -26,3 +26,15 @@ Route::apiResource('/employee',EmployeeController::class);
 Route::apiResource('/leave',LeaveController::class);
 
 Route::apiResource('/task',TaskController::class);
+
+Route::middleware('auth:sanctum')->get('/transactions',function(Request $request){
+    return $request->transactions();
+});
+
+Route::get('transactions', [TransactionsController::class, 'index']); 
+Route::match(['get', 'post'], 'addnew', [TransactionsController::class, 'store']);
+
+Route::get('transactions/{id}', [TransactionsController::class, 'show']);
+Route::put('transactionupdate/{id}', [TransactionsController::class, 'update']);
+Route::delete('transactiondelete/{id}', [TransactionsController::class, 'destroy']); 
+
